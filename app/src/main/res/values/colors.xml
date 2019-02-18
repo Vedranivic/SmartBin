@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ff7b00</color>
-    <color name="colorPrimaryDark">#8f4500</color>
-    <color name="colorAccent">#1565c0</color>
+    <color name="colorPrimary">#558b2f</color>
+    <color name="colorPrimaryDark">#19331b</color>
+    <color name="colorAccent">#558b2f</color>
     <color name="green">#558b2f</color>
     <color name="yellow">#f9a825</color>
     <color name="red">#bf360c</color>
+    <color name="darkGray">#2E2F30</color>
+    <color name="lightGray">#5c5c60</color>
+    <color name="dayPressed">#19331b</color>
+    <color name="daySelected">#558b2f</color>
+    <color name="dayDeselected">#5c5c60</color>
+
+    <color name="colorAccent2">#1565c0</color>
 
 </resources>

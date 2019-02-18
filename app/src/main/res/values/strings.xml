@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Smart Bin</string>
+    <string name="next">NEXT</string>
+    <string name="ssidHint">SSID</string>
+    <string name="passwordHint">Password</string>
+    <string name="enableButtonText">ENABLE</string>
+    <string name="binSizeHint">Select bin size…</string>
+    <string name="set_timeHint">Set time…</string>
+    <string name="reminderOptionHint">Select reminder option…</string>
+
+    <string-array
+        name="binSizes">
+        <item>120 L</item>
+        <item>80 L</item>
+        <item>60 L</item>
+    </string-array>
+
+    <string-array
+        name="reminderOptions">
+        <item>1 day before</item>
+        <item>1 hour before</item>
+        <item>30 minutes before</item>
+        <item>15 minutes before</item>
+    </string-array>
 </resources>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".setup.HomeNetworkActivity">
+
+
+    <TextView
+        android:id="@+id/lbInstructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textStyle="italic"
+        android:textSize="16sp"
+        android:text="Fill out the SSID and password of your home network in order for smartBin to connect to it."
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="48dp"
+        app:layout_constraintBottom_toTopOf="@id/etSSID"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSSID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nextFocusDown="@id/etPASS"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColorHighlight="@color/colorPrimary"
+        android:textCursorDrawable="@null"
+        android:textColor="@android:color/white"
+        android:textSelectHandle="@color/colorPrimary"
+        android:textSelectHandleLeft="@color/colorPrimary"
+        android:textSelectHandleRight="@color/colorPrimary"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:hint="@string/ssidHint"
+        android:layout_marginEnd="48dp"
+        android:layout_marginStart="48dp"
+        app:layout_constraintBottom_toTopOf="@id/etPASS"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etPASS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColorHighlight="@color/colorPrimary"
+        android:textSelectHandle="@color/colorPrimary"
+        android:textSelectHandleLeft="@color/colorPrimary"
+        android:textSelectHandleRight="@color/colorPrimary"
+        android:textCursorDrawable="@null"
+        android:textColor="@android:color/white"
+        android:maxLines="1"
+        android:hint="@string/passwordHint"
+        android:inputType="textPassword"
+        android:layout_marginEnd="48dp"
+        android:layout_marginStart="48dp"
+        app:layout_constraintBottom_toTopOf="@id/btNext"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/btNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/enableButtonText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

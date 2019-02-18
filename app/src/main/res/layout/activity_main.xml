@@ -4,51 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#212121"
+    android:background="@color/darkGray"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/lbPercentage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:text="Your bin is:"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvPercentage"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_marginTop="8dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:textAlignment="center"
-        android:background="@color/green"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lbPercentage" />
-
-
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tvPercentage"
-        android:layout_marginEnd="18dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:id="@+id/progressBar"
-        android:progressDrawable="@drawable/progressbarstyle"
-        android:max="100"
-        android:progress="50"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="54dp"
+        />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/lightGray"
+        android:elevation="5dp"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        app:menu="@menu/bottom_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

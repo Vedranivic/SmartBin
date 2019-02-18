@@ -2,58 +2,109 @@ package com.example.vedranivic.smartbin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.Bundle;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 
-import com.example.vedranivic.smartbin.Model.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.example.vedranivic.smartbin.setup.PlacementActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+
+import java.util.Calendar;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
-    @BindView(R.id.tvPercentage)
-    TextView tvPercentage;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
+    public static final String TAG = MainActivity.class.getSimpleName();
+
+    @BindView(R.id.bottomNavigation)
+    BottomNavigationView bottomNavigationView;
+
+    private Fragment mybinFragment = new MyBinFragment();
+    private Fragment settingsFragment = new SettingsFragment();
+    private Fragment statisticsFragment = new StatisticsFragment();
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    Fragment activeFragment = mybinFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        getData();
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_mybin);
+
+        firstTimeSetup();
+
     }
 
-    private void getData() {
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("-LYJcWV50-PrLDQq9Vo8").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int percentage = (int)Math.round(dataSnapshot.getValue(User.class).getPercentage());
-                if (percentage > 50 && percentage < 85){
-                    tvPercentage.setBackgroundColor(getResources().getColor(R.color.yellow));
-                }
-                else if (percentage > 85){
-                    tvPercentage.setBackgroundColor(getResources().getColor(R.color.red));
-                }
-                else {
-                    tvPercentage.setBackgroundColor(getResources().getColor(R.color.green));
-                }
-                tvPercentage.setText(String.valueOf(percentage) + "% full");
-                progressBar.setProgress(percentage);
+    private void firstTimeSetup() {
+        if(getSharedPreferences("SMARTBIN", MODE_PRIVATE).getString("USER_ID","").equals("")){
+            startActivity(new Intent(MainActivity.this,SplashActivity.class));
+            finish();
+        }
+        else{
+            if(getSharedPreferences("SMARTBIN", MODE_PRIVATE).getBoolean("INFO_NOT_SET_UP", false)){
+                bottomNavigationView.setSelectedItemId(R.id.navigation_settings);
             }
+        }
+    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+    private boolean loadFragment(Fragment fragment) {
+        //switching fragment
+        if (fragment != null) {
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        if(!menuItem.isChecked()) {
+            switch (menuItem.getItemId()) {
+                case R.id.navigation_mybin:
+                    activeFragment = mybinFragment;
+                    break;
+
+                case R.id.navigation_settings:
+                    activeFragment =  settingsFragment;
+                    break;
+
+                case R.id.navigation_statistics:
+                    activeFragment = statisticsFragment;
+                    break;
             }
-        });
+        }
+        return loadFragment(activeFragment);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fragmentManager = null;
+        mybinFragment = null;
+        settingsFragment = null;
+        statisticsFragment = null;
+        activeFragment = null;
     }
 }

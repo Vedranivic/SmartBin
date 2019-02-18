@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkGray"
+    tools:context=".MainActivity">
+
+
+    <RelativeLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/lbBinSize"
+            android:text="Bin size:"
+            android:textSize="16sp"
+            android:alpha="0.6"
+            android:textColor="@android:color/white"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.jaredrummler.materialspinner.MaterialSpinner
+            android:id="@+id/spBinSize"
+            android:hint="@string/binSizeHint"
+            android:textSize="16sp"
+            android:textColorHint="@android:color/white"
+            android:textColor="@android:color/white"
+            app:ms_background_color="@color/lightGray"
+            android:layout_margin="5dp"
+            android:layout_below="@id/lbBinSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/lbCollection"
+            android:text="Collection time:"
+            android:layout_below="@id/spBinSize"
+            android:textSize="16sp"
+            android:alpha="0.6"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ca.antonious.materialdaypicker.MaterialDayPicker
+            android:id="@+id/dayPicker"
+            android:layout_below="@id/lbCollection"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvTimeDay"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/dayPicker"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_shape"
+            android:backgroundTint="@color/lightGray"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:focusable="false"
+            tools:ignore="TextFields"
+            android:textColor="@android:color/white"
+            android:hint="@string/set_timeHint"/>
+
+        <TextView
+            android:id="@+id/lbRemindMe"
+            android:text="Remind me:"
+            android:layout_below="@id/tvTimeDay"
+            android:textSize="16sp"
+            android:alpha="0.6"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.jaredrummler.materialspinner.MaterialSpinner
+            android:id="@+id/spReminder"
+            android:hint="@string/reminderOptionHint"
+            android:textSize="16sp"
+            android:textColorHint="@android:color/white"
+            android:textColor="@android:color/white"
+            app:ms_background_color="@color/lightGray"
+            android:layout_margin="5dp"
+            android:layout_below="@id/lbRemindMe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <Button
+            android:id="@+id/btSaveSettings"
+            android:layout_width="155dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spReminder"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/colorAccent"
+            android:text="SAVE"
+            android:textColor="@android:color/white"/>
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_below="@id/btSaveSettings"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:textAllCaps="true"
+            android:text="CANCEL"
+            android:textColor="@color/colorAccent"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
