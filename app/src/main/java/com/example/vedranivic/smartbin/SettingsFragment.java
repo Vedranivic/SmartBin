@@ -213,14 +213,10 @@ public class SettingsFragment extends Fragment implements TimePickerDialog.OnTim
 
     private void setReminder() {
         Calendar calendar = GregorianCalendar.getInstance();
-        Log.e("TAGG",String.valueOf(dayPicker.getSelectedDays().get(0).ordinal()));
-        Log.e("TAGG",String.valueOf(Integer.parseInt(tvTimeDay.getText().toString().substring(0,2))));
-        Log.e("TAGG",String.valueOf(Integer.parseInt(tvTimeDay.getText().toString().substring(3,5))));
-
-
         calendar.set(Calendar.DAY_OF_WEEK, dayPicker.getSelectedDays().get(0).ordinal()+1);
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(tvTimeDay.getText().toString().substring(0,2)));
         calendar.set(Calendar.MINUTE, Integer.parseInt(tvTimeDay.getText().toString().substring(3,5)));
+        calendar.set(Calendar.SECOND,0);
         long reminderOffset = 0;
         switch(spReminder.getSelectedIndex()){
             case 0: reminderOffset = 1000*60*60*24;
