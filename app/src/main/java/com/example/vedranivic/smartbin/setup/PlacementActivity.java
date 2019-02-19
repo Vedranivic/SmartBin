@@ -11,6 +11,10 @@ import android.widget.Button;
 
 import com.example.vedranivic.smartbin.R;
 
+/*----------------------------------------
+First step in setup - instructions for
+proper placement of the smartBin device
+----------------------------------------*/
 public class PlacementActivity extends AppCompatActivity {
 
     @BindView(R.id.btNext)
@@ -24,15 +28,10 @@ public class PlacementActivity extends AppCompatActivity {
 
     }
 
+    // move to next Step
     @OnClick(R.id.btNext)
     public void moveToConnectionSetup(){
         startActivity(new Intent(PlacementActivity.this, ConnectionActivity.class));
         finish();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
     }
 }

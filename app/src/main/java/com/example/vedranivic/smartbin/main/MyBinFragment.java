@@ -25,6 +25,11 @@ import butterknife.ButterKnife;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/*----------------------------------------
+Main Fragment of the main screen for displaying
+current bin state (percentage of fullness).
+The data is retrieved from Firebase Database.
+----------------------------------------*/
 public class MyBinFragment extends Fragment {
 
     public static final String TAG = MyBinFragment.class.getSimpleName();
@@ -48,7 +53,7 @@ public class MyBinFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mybin, container, false);
         ButterKnife.bind(this, view);
 
-
+        // retrieving userID that was stored in Shared Prefferences during successful setup process
         if(getActivity()!=null) {
             userID = getActivity().getSharedPreferences("SMARTBIN", MODE_PRIVATE).getString("USER_ID", "");
         }
@@ -64,6 +69,7 @@ public class MyBinFragment extends Fragment {
         return view;
     }
 
+    // retrieving percentage data from Firebase Database
     private void getData() {
         databaseReference.child(userID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -79,6 +85,7 @@ public class MyBinFragment extends Fragment {
         });
     }
 
+    // updating display (color and level of the bin) based on percentage
     private void updateDisplay() {
         if(getContext()!=null) {
             tvPercentage.setText(String.valueOf(percentage) + "%");

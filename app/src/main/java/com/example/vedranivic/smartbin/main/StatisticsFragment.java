@@ -24,6 +24,12 @@ import butterknife.ButterKnife;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/*----------------------------------------
+Fragment on the main screen for displaying
+current statistics of the user’s waste
+management. Data is retrieved from Firebase
+database and calculations are made
+----------------------------------------*/
 public class StatisticsFragment extends Fragment {
 
     public static final String TAG = StatisticsFragment.class.getSimpleName();
@@ -62,8 +68,10 @@ public class StatisticsFragment extends Fragment {
         return view;
     }
 
+    // calculate and display statistics
     private void getStatistics() {
 
+        // get User data
         databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -76,6 +84,8 @@ public class StatisticsFragment extends Fragment {
                     tvCollectedThis.setText(String.valueOf(user.getCollectionNumber()));
                     tvWasteThis.setText(String.format("%.2f",user.getWasteAmount()).concat(getResources().getString(R.string.unit_m_cube)));
                 }
+
+                // get constant parameters for calculations (parameters are stored online)
                 databaseReference.child("parameters").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -107,6 +117,7 @@ public class StatisticsFragment extends Fragment {
                     }
                 });
 
+                // setting the trend icon (up or down) for values
                 if(user.getCollectionNumber() < user.getLastCollectionNumber()){
                     tvCollectedThis.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.ic_trending_down_24dp,0);
                 }

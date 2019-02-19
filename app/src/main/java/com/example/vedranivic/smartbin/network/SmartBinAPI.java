@@ -6,6 +6,10 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+/*----------------------------------------
+API Interface that determines the possible
+calls to the API (smartBin server’s REST API)
+----------------------------------------*/
 public interface SmartBinAPI {
 
     @GET("ssid")

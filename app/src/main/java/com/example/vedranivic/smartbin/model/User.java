@@ -1,5 +1,9 @@
 package com.example.vedranivic.smartbin.model;
 
+
+/*----------------------------------------
+Firebase database response for single user
+----------------------------------------*/
 public class User {
 
     private Double distance;

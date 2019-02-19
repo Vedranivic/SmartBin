@@ -1,5 +1,9 @@
 package com.example.vedranivic.smartbin.model;
 
+/*----------------------------------------
+Firebase database response for constant
+parameters used in expenses calculation
+----------------------------------------*/
 public class UnicomConstants {
 
     private Double MJU;

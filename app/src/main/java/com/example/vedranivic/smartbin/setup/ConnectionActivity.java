@@ -23,6 +23,11 @@ import com.example.vedranivic.smartbin.R;
 
 import java.util.List;
 
+/*----------------------------------------
+Second step in setup - connecting to the
+soft access point WiFi of the smartBin
+device ("smartBin")
+----------------------------------------*/
 public class ConnectionActivity extends AppCompatActivity {
 
     @BindView(R.id.btNext)
@@ -41,14 +46,17 @@ public class ConnectionActivity extends AppCompatActivity {
     @OnClick(R.id.btNext)
     public void moveToHomeNetworkSetup(){
         if(!connectedToAP) {
+            // Open WiFi settings
             startActivityForResult(new Intent(Settings.ACTION_WIFI_SETTINGS),100);
         }
         else{
+            // if connected to smartBin WiFi (softAP) move to next step
             startActivity(new Intent(ConnectionActivity.this, HomeNetworkActivity.class));
             finish();
         }
     }
 
+    // Check if connected to smartBin Wifi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -62,12 +70,6 @@ public class ConnectionActivity extends AppCompatActivity {
                 }
             }
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
     }
 
 }

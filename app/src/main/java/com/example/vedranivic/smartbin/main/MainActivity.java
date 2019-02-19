@@ -17,6 +17,10 @@ import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/*----------------------------------------
+Main screen handling settings, bin and
+statistics fragments.
+----------------------------------------*/
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -39,10 +43,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.navigation_mybin);
 
+        /*getSharedPreferences("SMARTBIN", MODE_PRIVATE).edit()
+                .putString("USER_ID", "-LZ1r_7--UVPCUjenlwt")
+                .commit();*/
+
         firstTimeSetup();
 
     }
 
+    // If the app is start up the first time without being set up (no userID), the setup flow is started
     private void firstTimeSetup() {
         if(getSharedPreferences("SMARTBIN", MODE_PRIVATE).getString("USER_ID","").equals("")){
             startActivity(new Intent(MainActivity.this,SplashActivity.class));
@@ -55,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-
+    // loading specific fragment
     private boolean loadFragment(Fragment fragment) {
         //switching fragment
         if (fragment != null) {
@@ -68,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return false;
     }
 
+    // Handling bottom navigation menu items click
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 

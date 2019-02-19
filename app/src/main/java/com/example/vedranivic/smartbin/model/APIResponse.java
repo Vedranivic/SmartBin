@@ -1,5 +1,9 @@
 package com.example.vedranivic.smartbin.model;
 
+/*----------------------------------------
+smartbin’s softAP server API response for
+receiving userID etc.
+----------------------------------------*/
 import com.google.gson.annotations.SerializedName;
 
 public class APIResponse

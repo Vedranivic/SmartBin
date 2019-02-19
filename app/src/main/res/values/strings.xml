@@ -28,5 +28,6 @@
         <item>1 hour before</item>
         <item>30 minutes before</item>
         <item>15 minutes before</item>
+        <item>2 minutes before</item>
     </string-array>
 </resources>
