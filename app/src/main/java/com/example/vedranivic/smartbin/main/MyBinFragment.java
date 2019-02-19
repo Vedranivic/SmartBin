@@ -1,4 +1,4 @@
-package com.example.vedranivic.smartbin;
+package com.example.vedranivic.smartbin.main;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.vedranivic.smartbin.R;
 import com.example.vedranivic.smartbin.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

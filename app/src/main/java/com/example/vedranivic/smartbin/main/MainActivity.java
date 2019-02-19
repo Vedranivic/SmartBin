@@ -1,26 +1,17 @@
-package com.example.vedranivic.smartbin;
+package com.example.vedranivic.smartbin.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlarmManager;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.media.RingtoneManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.example.vedranivic.smartbin.setup.PlacementActivity;
+import com.example.vedranivic.smartbin.R;
+import com.example.vedranivic.smartbin.setup.SplashActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-import java.util.Calendar;
-
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;

@@ -4,7 +4,225 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/darkGray"
+    tools:context=".main.MainActivity">
+
+
+    <TextView
+        android:id="@+id/lbLast"
+        android:text="Last month"
+        android:textSize="16sp"
+        android:alpha="0.6"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/rlContainer"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/rlContainer"
+        android:alpha="0.5"
+        app:layout_constraintTop_toBottomOf="@id/lbLast"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/rounded_shape"
+        android:backgroundTint="@color/lightGray"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+
+        <TextView
+            android:id="@+id/lbCollected"
+            android:text="@string/numberOfCollectionString"
+            android:textSize="16sp"
+            android:alpha="0.6"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvCollected"
+            tools:text="4"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/lbCollected"
+            android:layout_alignBottom="@id/lbCollected"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:alpha="0.6"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/lbExpenses"
+            android:text="@string/expensesString"
+            android:textSize="16sp"
+            android:alpha="0.6"
+            android:layout_below="@id/lbCollected"
+            android:layout_marginTop="16dp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvExpenses"
+            tools:text="42.36 kn"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:alpha="0.6"
+            android:layout_alignTop="@id/lbExpenses"
+            android:layout_alignBottom="@id/lbExpenses"
+            android:layout_alignParentEnd="true"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/lbWaste"
+            android:text="Amount of waste:"
+            android:textSize="16sp"
+            android:alpha="0.6"
+            android:layout_below="@id/lbExpenses"
+            android:layout_marginTop="16dp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvWaste"
+            tools:text="0.407 m&#179;"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:alpha="0.6"
+            android:layout_alignTop="@id/lbWaste"
+            android:layout_alignBottom="@id/lbWaste"
+            android:layout_alignParentEnd="true"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/lbThis"
+        android:text="This month"
+        android:textSize="16sp"
+        android:alpha="0.6"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/rlContainer"
+        app:layout_constraintStart_toStartOf="@id/rlContainerThis"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/rlContainerThis"
+        app:layout_constraintTop_toBottomOf="@id/lbThis"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/rounded_shape"
+        android:backgroundTint="@color/lightGray"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+
+        <TextView
+            android:id="@+id/lbCollectedThis"
+            android:text="@string/current_number_of_collectionsString"
+            android:textSize="16sp"
+            android:alpha="0.6"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvCollectedThis"
+            android:drawablePadding="8dp"
+            tools:text="4"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/lbCollectedThis"
+            android:layout_alignBottom="@id/lbCollectedThis"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:alpha="0.6"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/lbExpensesThis"
+            android:text="@string/estimated_expensesString"
+            android:textSize="16sp"
+            android:alpha="0.6"
+            android:layout_below="@id/lbCollectedThis"
+            android:layout_marginTop="16dp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvExpensesThis"
+            android:drawablePadding="8dp"
+            tools:text="42.36 kn"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:alpha="0.6"
+            android:layout_alignTop="@id/lbExpensesThis"
+            android:layout_alignBottom="@id/lbExpensesThis"
+            android:layout_alignParentEnd="true"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/lbWasteThis"
+            android:text="Amount of waste:"
+            android:textSize="16sp"
+            android:alpha="0.6"
+            android:layout_below="@id/lbExpensesThis"
+            android:layout_marginTop="16dp"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvWasteThis"
+            android:drawablePadding="8dp"
+            tools:text="0.407 m&#179;"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:alpha="0.6"
+            android:layout_alignTop="@id/lbWasteThis"
+            android:layout_alignBottom="@id/lbWasteThis"
+            android:layout_alignParentEnd="true"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

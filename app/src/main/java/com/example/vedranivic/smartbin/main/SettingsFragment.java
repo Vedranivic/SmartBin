@@ -1,4 +1,4 @@
-package com.example.vedranivic.smartbin;
+package com.example.vedranivic.smartbin.main;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.vedranivic.smartbin.R;
 import com.example.vedranivic.smartbin.base.AlarmReceiver;
 import com.example.vedranivic.smartbin.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -62,8 +63,8 @@ public class SettingsFragment extends Fragment implements TimePickerDialog.OnTim
     private Boolean dayPicked = false;
     private Boolean timePicked = false;
     private Boolean reminderOptionChosen = false;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    String userID;
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    private String userID;
 
     @Nullable
     @Override
@@ -200,6 +201,8 @@ public class SettingsFragment extends Fragment implements TimePickerDialog.OnTim
             databaseReference.child(userID).child("collectionTime").setValue(tvTimeDay.getText());
             databaseReference.child(userID).child("reminderOption").setValue(spReminder.getText());
 
+            databaseReference.child(userID).child("currentMonth").setValue(Calendar.getInstance().get(Calendar.MONTH));
+
             setReminder();
             getActivity().getSharedPreferences("SMARTBIN", MODE_PRIVATE).edit()
                     .putBoolean("INFO_NOT_SET_UP", false)
@@ -229,11 +232,20 @@ public class SettingsFragment extends Fragment implements TimePickerDialog.OnTim
                 getActivity(),
                 AlarmReceiver.reqCode,
                 new Intent(getContext(),
-                        AlarmReceiver.class),
+                        AlarmReceiver.class).putExtra("TYPE",AlarmReceiver.REMINDER_TYPE),
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        PendingIntent eventIntent = PendingIntent.getBroadcast(
+                getActivity(),
+                AlarmReceiver.reqCodeEvent,
+                new Intent(getContext(),
+                        AlarmReceiver.class).putExtra("TYPE",AlarmReceiver.EVENT_TYPE),
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
         AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()-reminderOffset, AlarmManager.INTERVAL_DAY*7,alarmIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7,eventIntent);
     }
 
     @OnClick(R.id.tvCancel)

@@ -7,6 +7,13 @@
     <string name="binSizeHint">Select bin size…</string>
     <string name="set_timeHint">Set time…</string>
     <string name="reminderOptionHint">Select reminder option…</string>
+    <string name="numberOfCollectionString">Number of collections:</string>
+    <string name="estimated_expensesString">Estimated expenses:</string>
+    <string name="expensesString">Expenses:</string>
+    <string name="current_number_of_collectionsString">Current number of collections:</string>
+    <string name="unit_m_cube">&#160;m&#179;</string>
+    <string name="unit_HRK">&#160;kn</string>
+
 
     <string-array
         name="binSizes">

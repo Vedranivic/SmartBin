@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.internal.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,24 +13,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.vedranivic.smartbin.MainActivity;
+import com.example.vedranivic.smartbin.main.MainActivity;
 import com.example.vedranivic.smartbin.R;
 import com.example.vedranivic.smartbin.model.APIResponse;
 import com.example.vedranivic.smartbin.network.SmartBinNetworkService;
-
-import java.util.List;
 
 public class HomeNetworkActivity extends AppCompatActivity {
 

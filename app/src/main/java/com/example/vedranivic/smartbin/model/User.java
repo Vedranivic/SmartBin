@@ -16,6 +16,19 @@ public class User {
 
     private String reminderOption;
 
+    private int collectionNumber;
+
+    private int lastCollectionNumber;
+
+    private Double wasteAmount;
+
+    private Double lastWasteAmount;
+
+    private Boolean scheduledForCollection;
+
+    private int currentMonth;
+
+
     public Double getDistance ()
     {
         return distance;
@@ -45,5 +58,29 @@ public class User {
 
     public String getReminderOption() {
         return reminderOption;
+    }
+
+    public int getCollectionNumber() {
+        return collectionNumber;
+    }
+
+    public int getLastCollectionNumber() {
+        return lastCollectionNumber;
+    }
+
+    public Double getWasteAmount() {
+        return wasteAmount;
+    }
+
+    public Double getLastWasteAmount() {
+        return lastWasteAmount;
+    }
+
+    public Boolean getScheduledForCollection() {
+        return scheduledForCollection;
+    }
+
+    public int getCurrentMonth() {
+        return currentMonth;
     }
 }
