@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.vedranivic.smartbin.R;
 import com.example.vedranivic.smartbin.base.AlarmReceiver;
+import com.example.vedranivic.smartbin.base.Constants;
 import com.example.vedranivic.smartbin.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -243,11 +244,11 @@ public class SettingsFragment extends Fragment implements TimePickerDialog.OnTim
 
         // Choosing how much time before to remind the user base on selected option
         switch(spReminder.getSelectedIndex()){
-            case 0: reminderOffset = 1000*60*60*24;
-            case 1: reminderOffset = 1000*60*60;
-            case 2: reminderOffset = 1000*60*30;
-            case 3: reminderOffset = 1000*60*15;
-            case 4: reminderOffset = 1000*60*2;
+            case 0: reminderOffset = Constants.ONE_DAY;
+            case 1: reminderOffset = Constants.ONE_HOUR;
+            case 2: reminderOffset = Constants.HALF_HOUR;
+            case 3: reminderOffset = Constants.MINUTES_15;
+            case 4: reminderOffset = Constants.MINUTES_2;
         }
 
         // The reminder alarm intent that will fire on reminding time

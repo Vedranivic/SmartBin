@@ -24,6 +24,11 @@ import androidx.core.app.NotificationCompat;
 
 import static android.content.Context.MODE_PRIVATE;
 
+
+/*----------------------------------------
+Receiver for background events such as
+alarm (reminders) and notification
+----------------------------------------*/
 public class AlarmReceiver extends BroadcastReceiver{
 
     private final static String TAG = AlarmReceiver.class.getSimpleName();
@@ -63,11 +68,13 @@ public class AlarmReceiver extends BroadcastReceiver{
         }
     }
 
+    // dismiss notification
     private void dismissNotification(Context context) {
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.cancel(reqCode);
     }
 
+    // schedule collection (the bin will be emptied on event)
     private void scheduleForCollection(Context context) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         String userID = context.getSharedPreferences("SMARTBIN", MODE_PRIVATE).getString("USER_ID", "");
@@ -78,7 +85,23 @@ public class AlarmReceiver extends BroadcastReceiver{
         mNotificationManager.cancel(reqCode);
     }
 
+    // building and showing notification
     public void showNotification(Context context) {
+        String userID = context.getSharedPreferences("SMARTBIN", MODE_PRIVATE).getString("USER_ID", "");
+
+        //getting percentage to show it in notification
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                percentage = user.getPercentage();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG,databaseError.getMessage());
+            }
+        });
 
         PendingIntent acceptNotificationIntent = PendingIntent.getBroadcast(
                 context,
@@ -109,11 +132,10 @@ public class AlarmReceiver extends BroadcastReceiver{
                 .setSmallIcon(R.drawable.ic_mybin_24dp)
                 .setContentIntent(openAppIntent)
                 .setContentTitle("Reminder")
-                .setContentText("You should take your bin out for waste collection!")
+                .setContentText("You should take your bin out for waste collection! It is ".concat(String.valueOf((int)Math.round(percentage))).concat(" full."))
                 .addAction(R.drawable.ic_mybin_24dp, "SCHEDULE FOR COLLECTION", acceptNotificationIntent)
                 .addAction(R.drawable.ic_mybin_24dp, "DISMISS", dismissNotificationIntent)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setAutoCancel(true)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setCategory(NotificationCompat.CATEGORY_ALARM);
 
@@ -121,6 +143,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         mNotificationManager.notify(reqCode, mBuilder.build());
     }
 
+    // updating statistics of the user’s waste management (increase collection number, waste amount etc.)
     private void updateStatistics(Context context){
         String userID = context.getSharedPreferences("SMARTBIN", MODE_PRIVATE).getString("USER_ID", "");
         if(!userID.equals("")) {
@@ -142,7 +165,7 @@ public class AlarmReceiver extends BroadcastReceiver{
                     currentMonth = user.getCurrentMonth();
                     percentage = user.getPercentage();
 
-                    if(scheduledForCollection){
+                    if(scheduledForCollection && collectionNumber < 4){
                         databaseReference.child(userID).child("collectionNumber").setValue(collectionNumber+1);
                         databaseReference.child(userID).child("wasteAmount").setValue(wasteAmount + (percentage/100)*Integer.parseInt(binSize.split(" ")[0])/1000);
                         Log.e(TAG,"PARSE: " + String.valueOf(Integer.parseInt(binSize.split(" ")[0])));
