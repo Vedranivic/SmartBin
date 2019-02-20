@@ -44,10 +44,11 @@ public class AlarmReceiver extends BroadcastReceiver{
     private Double wasteAmount = 0.0;
     private Boolean scheduledForCollection = false;
     private String binSize;
-    private Double percentage;
+    private Double percentage = 0.0;
     private int currentMonth;
 
     public final static String CHANNEL_REMINDER = "REMINDER";
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -71,18 +72,23 @@ public class AlarmReceiver extends BroadcastReceiver{
     // dismiss notification
     private void dismissNotification(Context context) {
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.cancel(reqCode);
+        mNotificationManager.cancelAll();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        String userID = context.getSharedPreferences("SMARTBIN", MODE_PRIVATE).getString("USER_ID", "");
+        if(!userID.equals("")) {
+            databaseReference.child(userID).child("scheduledForCollection").setValue(false);
+        }
     }
 
     // schedule collection (the bin will be emptied on event)
     private void scheduleForCollection(Context context) {
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.cancelAll();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         String userID = context.getSharedPreferences("SMARTBIN", MODE_PRIVATE).getString("USER_ID", "");
         if(!userID.equals("")) {
             databaseReference.child(userID).child("scheduledForCollection").setValue(true);
         }
-        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.cancel(reqCode);
     }
 
 
@@ -97,52 +103,57 @@ public class AlarmReceiver extends BroadcastReceiver{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 percentage = user.getPercentage();
-
-                // Constructing notification
-                PendingIntent acceptNotificationIntent = PendingIntent.getBroadcast(
-                        context,
-                        reqCode,
-                        new Intent(context, AlarmReceiver.class)
-                                .setAction(SCHEDULE_FOR_COLLECTION_ACTION)
-                                .putExtra("COLLECTION", true)
-                        , PendingIntent.FLAG_UPDATE_CURRENT
-                );
-
-                PendingIntent openAppIntent = PendingIntent.getActivity(
-                        context,
-                        reqCode,
-                        new Intent(context, MainActivity.class)
-                        , PendingIntent.FLAG_UPDATE_CURRENT
-                );
-
-                PendingIntent dismissNotificationIntent = PendingIntent.getBroadcast(
-                        context,
-                        reqCode,
-                        new Intent(context, AlarmReceiver.class)
-                                .putExtra("COLLECTION", false)
-                                .setAction(DISMISS_ACTION)
-                        , PendingIntent.FLAG_UPDATE_CURRENT
-                );
-
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_REMINDER)
-                        .setSmallIcon(R.drawable.ic_mybin_24dp)
-                        .setContentIntent(openAppIntent)
-                        .setContentTitle("Reminder")
-                        .setContentText("You should take your bin out for waste collection! It is ".concat(String.valueOf((int)Math.round(percentage))).concat("% full."))
-                        .addAction(R.drawable.ic_mybin_24dp, "SCHEDULE FOR COLLECTION", acceptNotificationIntent)
-                        .addAction(R.drawable.ic_mybin_24dp, "DISMISS", dismissNotificationIntent)
-                        .setPriority(NotificationCompat.PRIORITY_MAX)
-                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                        .setCategory(NotificationCompat.CATEGORY_ALARM);
-
-                NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                mNotificationManager.notify(reqCode, mBuilder.build());
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG,databaseError.getMessage());
             }
         });
+
+        // Constructing notification
+        PendingIntent acceptNotificationIntent = PendingIntent.getBroadcast(
+                context,
+                reqCode,
+                new Intent(context, AlarmReceiver.class)
+                        .setAction(SCHEDULE_FOR_COLLECTION_ACTION)
+                , PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        PendingIntent openAppIntent = PendingIntent.getActivity(
+                context,
+                reqCode,
+                new Intent(context, MainActivity.class)
+                , PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        PendingIntent dismissNotificationIntent = PendingIntent.getBroadcast(
+                context,
+                reqCode,
+                new Intent(context, AlarmReceiver.class)
+                        .setAction(DISMISS_ACTION)
+                , PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        String messageText = "Your bin is ".concat(String.valueOf((int)Math.round(percentage)))
+                .concat("% full. Do you want to schedule it for collection?");
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_REMINDER)
+                .setSmallIcon(R.drawable.ic_mybin_24dp)
+                .setContentIntent(openAppIntent)
+                .setContentTitle("Reminder")
+                .setContentText(messageText)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(messageText))
+                .addAction(R.drawable.ic_mybin_24dp, "COLLECT", acceptNotificationIntent)
+                .addAction(R.drawable.ic_mybin_24dp, "DISMISS", dismissNotificationIntent)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setAutoCancel(true)
+                .setCategory(NotificationCompat.CATEGORY_ALARM);
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(reqCode, mBuilder.build());
 
 
     }

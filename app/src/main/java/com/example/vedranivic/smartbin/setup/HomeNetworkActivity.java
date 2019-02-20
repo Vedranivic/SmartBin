@@ -83,6 +83,7 @@ public class HomeNetworkActivity extends AppCompatActivity {
         if(validateInput()){
             String ssid = etSSID.getText().toString();
             String password = etPASS.getText().toString();
+
             // hiding keyboard on button press
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(etSSID.getWindowToken(), 0);
@@ -93,7 +94,7 @@ public class HomeNetworkActivity extends AppCompatActivity {
             SmartBinNetworkService.sendSSID(ssid).enqueue(new Callback<APIResponse>() {
                 @Override
                 public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                    Log.d(TAG,call.request().toString());
+
                     // sending password
                     SmartBinNetworkService.sendPassword(password).enqueue(new Callback<APIResponse>() {
                         @SuppressLint("ApplySharedPref")
@@ -134,7 +135,6 @@ public class HomeNetworkActivity extends AppCompatActivity {
                     toastMessage("Enabling failed. Please check connectivity and try again");
                 }
             });
-
 
         }
 

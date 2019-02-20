@@ -13,6 +13,8 @@
     <string name="current_number_of_collectionsString">Current number of collections:</string>
     <string name="unit_m_cube">&#160;m&#179;</string>
     <string name="unit_HRK">&#160;kn</string>
+    <string name="WarningYellow">Your bin is getting full. Consider some recycling and sorting.</string>
+    <string name="WarningRed">Your bin is full.</string>
 
 
     <string-array

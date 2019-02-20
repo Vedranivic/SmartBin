@@ -214,7 +214,9 @@ public class SettingsFragment extends Fragment implements TimePickerDialog.OnTim
         else {
             // if everything validated, write to database
             databaseReference.child(userID).child("binSize").setValue(spBinSize.getText());
-            databaseReference.child(userID).child("collectionDay").setValue(dayPicker.getSelectedDays().get(0).toString());
+            databaseReference.child(userID).child("collectionDay").setValue(
+                    dayPicker.getSelectedDays().get(0).toString()
+            );
             databaseReference.child(userID).child("collectionTime").setValue(tvTimeDay.getText());
             databaseReference.child(userID).child("reminderOption").setValue(spReminder.getText());
 
@@ -271,8 +273,12 @@ public class SettingsFragment extends Fragment implements TimePickerDialog.OnTim
 
         // Adding intents to the alarm manager
         AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()-reminderOffset, AlarmManager.INTERVAL_DAY*7,alarmIntent);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7,eventIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis()-reminderOffset,
+                AlarmManager.INTERVAL_DAY*7,alarmIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY*7,eventIntent);
     }
 
     @OnClick(R.id.tvCancel)

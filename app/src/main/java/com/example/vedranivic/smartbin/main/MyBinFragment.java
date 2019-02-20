@@ -88,19 +88,19 @@ public class MyBinFragment extends Fragment {
     // updating display (color and level of the bin) based on percentage
     private void updateDisplay() {
         if(getContext()!=null) {
-            tvPercentage.setText(String.valueOf(percentage) + "%");
+            tvPercentage.setText(String.valueOf(percentage).concat("%"));
             progressBar.setProgress(percentage);
 
             if (percentage >= 50 && percentage < 85) {
                 progressBar.getProgressDrawable().clearColorFilter();
                 progressBar.getProgressDrawable().setColorFilter(
                         getResources().getColor(R.color.yellow), PorterDuff.Mode.MULTIPLY);
-                lbWarning.setText("Your bin is getting full. Consider some recycling and sorting.");
+                lbWarning.setText(getString(R.string.WarningYellow));
             } else if (percentage >= 85) {
                 progressBar.getProgressDrawable().clearColorFilter();
                 progressBar.getProgressDrawable().setColorFilter(
                         getResources().getColor(R.color.red), PorterDuff.Mode.MULTIPLY);
-                lbWarning.setText("Your bin is full.");
+                lbWarning.setText(getString(R.string.WarningRed));
             } else {
                 progressBar.getProgressDrawable().clearColorFilter();
                 progressBar.getProgressDrawable().setColorFilter(
