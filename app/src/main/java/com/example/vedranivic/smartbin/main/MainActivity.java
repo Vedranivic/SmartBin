@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private Fragment settingsFragment = new SettingsFragment();
     private Fragment statisticsFragment = new StatisticsFragment();
     private FragmentManager fragmentManager = getSupportFragmentManager();
-    Fragment activeFragment = mybinFragment;
+    private Fragment activeFragment = mybinFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

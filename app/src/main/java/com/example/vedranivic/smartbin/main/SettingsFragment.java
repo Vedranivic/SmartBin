@@ -199,39 +199,37 @@ public class SettingsFragment extends Fragment implements TimePickerDialog.OnTim
     @SuppressLint("ApplySharedPref")
     @OnClick(R.id.btSaveSettings)
     public void saveSettings(){
-        if(!binSizeChosen){
-            toastMessage("Please select approximate bin size");
-        }
-        else if(!dayPicked){
-            toastMessage("Please select the day of the week when your waste usually gets collected");
-        }
-        else if(!timePicked){
-            toastMessage("Please select the time of the day when your waste usually gets collected");
-        }
-        else if(!reminderOptionChosen){
-            toastMessage("Please select a reminder option");
-        }
-        else {
-            // if everything validated, write to database
-            databaseReference.child(userID).child("binSize").setValue(spBinSize.getText());
-            databaseReference.child(userID).child("collectionDay").setValue(
-                    dayPicker.getSelectedDays().get(0).toString()
-            );
-            databaseReference.child(userID).child("collectionTime").setValue(tvTimeDay.getText());
-            databaseReference.child(userID).child("reminderOption").setValue(spReminder.getText());
+        if(Constants.IsNetworkConnected(getActivity())) {
+            if (!binSizeChosen) {
+                toastMessage("Please select approximate bin size");
+            } else if (!dayPicked) {
+                toastMessage("Please select the day of the week when your waste usually gets collected");
+            } else if (!timePicked) {
+                toastMessage("Please select the time of the day when your waste usually gets collected");
+            } else if (!reminderOptionChosen) {
+                toastMessage("Please select a reminder option");
+            } else {
+                // if everything validated, write to database
+                databaseReference.child(userID).child("binSize").setValue(spBinSize.getText());
+                databaseReference.child(userID).child("collectionDay").setValue(
+                        dayPicker.getSelectedDays().get(0).toString()
+                );
+                databaseReference.child(userID).child("collectionTime").setValue(tvTimeDay.getText());
+                databaseReference.child(userID).child("reminderOption").setValue(spReminder.getText());
 
-            databaseReference.child(userID).child("currentMonth").setValue(Calendar.getInstance().get(Calendar.MONTH));
+                databaseReference.child(userID).child("currentMonth").setValue(Calendar.getInstance().get(Calendar.MONTH));
 
-            // setting the reminder
-            setReminder();
-            // flag for setting set_up
-            getActivity().getSharedPreferences("SMARTBIN", MODE_PRIVATE).edit()
-                    .putBoolean("INFO_NOT_SET_UP", false)
-                    .commit();
-            toastMessage("Settings saved");
-            BottomNavigationView navigation = getActivity().findViewById(R.id.bottomNavigation);
-            navigation.setVisibility(View.VISIBLE);
-            navigation.setSelectedItemId(R.id.navigation_mybin);
+                // setting the reminder
+                setReminder();
+                // flag for setting set_up
+                getActivity().getSharedPreferences("SMARTBIN", MODE_PRIVATE).edit()
+                        .putBoolean("INFO_NOT_SET_UP", false)
+                        .commit();
+                toastMessage("Settings saved");
+                BottomNavigationView navigation = getActivity().findViewById(R.id.bottomNavigation);
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setSelectedItemId(R.id.navigation_mybin);
+            }
         }
     }
 

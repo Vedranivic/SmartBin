@@ -1,6 +1,9 @@
 package com.example.vedranivic.smartbin.main;
 
+import android.content.DialogInterface;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +13,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.vedranivic.smartbin.R;
+import com.example.vedranivic.smartbin.base.Constants;
 import com.example.vedranivic.smartbin.model.User;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,9 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -44,6 +51,7 @@ public class MyBinFragment extends Fragment {
     private int percentage = 0;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private String userID;
+
 
     @Nullable
     @Override
@@ -71,10 +79,10 @@ public class MyBinFragment extends Fragment {
 
     // retrieving percentage data from Firebase Database
     private void getData() {
-        databaseReference.child(userID).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(userID).child("percentage").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                percentage = (int)Math.round(dataSnapshot.getValue(User.class).getPercentage());
+                percentage = (int)Math.round(dataSnapshot.getValue(Double.class));
                 updateDisplay();
             }
 
@@ -96,11 +104,15 @@ public class MyBinFragment extends Fragment {
                 progressBar.getProgressDrawable().setColorFilter(
                         getResources().getColor(R.color.yellow), PorterDuff.Mode.MULTIPLY);
                 lbWarning.setText(getString(R.string.WarningYellow));
+                lbWarning.setPaintFlags(lbWarning.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+
             } else if (percentage >= 85) {
                 progressBar.getProgressDrawable().clearColorFilter();
                 progressBar.getProgressDrawable().setColorFilter(
                         getResources().getColor(R.color.red), PorterDuff.Mode.MULTIPLY);
                 lbWarning.setText(getString(R.string.WarningRed));
+                lbWarning.setPaintFlags(lbWarning.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
             } else {
                 progressBar.getProgressDrawable().clearColorFilter();
                 progressBar.getProgressDrawable().setColorFilter(
@@ -110,4 +122,23 @@ public class MyBinFragment extends Fragment {
         }
     }
 
+    @OnClick(R.id.lbWarning)
+    public void fullBinClick() {
+        if (percentage >= 85 && Constants.IsNetworkConnected(getActivity())) {
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+            alertDialog.setTitle("Your bin is full!");
+            alertDialog.setMessage("Do you want to schedule it for collection?");
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
+                    (dialog, which) -> {
+                        databaseReference.child(userID).child("scheduledForCollection").setValue(true);
+                        dialog.dismiss();
+                    });
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO",
+                    (dialog, which) -> {
+                        databaseReference.child(userID).child("scheduledForCollection").setValue(false);
+                        dialog.dismiss();
+                    });
+            alertDialog.show();
+        }
+    }
 }
